@@ -1,17 +1,17 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import Navbar from './components/Navbar.tsx';
-import Hero from './components/Hero.tsx';
-import Features from './components/Features.tsx';
-import ProgramsSection from './components/ProgramsSection.tsx';
-import ConsultationForm from './components/ConsultationForm.tsx';
-import RegistrationForm from './components/RegistrationForm.tsx';
-import FounderProfile from './components/TeacherProfiles.tsx';
-import SuccessStories from './components/SuccessStories.tsx';
-import SuccessStoriesSlider from './components/SuccessStoriesSlider.tsx';
-import BookingCalendar from './components/BookingCalendar.tsx';
-import AdminDashboard from './components/AdminDashboard.tsx';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import ProgramsSection from './components/ProgramsSection';
+import ConsultationForm from './components/ConsultationForm';
+import RegistrationForm from './components/RegistrationForm';
+import FounderProfile from './components/TeacherProfiles';
+import SuccessStories from './components/SuccessStories';
+import SuccessStoriesSlider from './components/SuccessStoriesSlider';
+import BookingCalendar from './components/BookingCalendar';
+import AdminDashboard from './components/AdminDashboard';
 import { Mail, Phone, Calendar, UserPlus, ArrowRight, Star, X, Play } from 'lucide-react';
 import { BRANDING, CONTACT } from './constants';
 
@@ -33,9 +33,18 @@ const PageTransition: React.FC<{ children: React.ReactNode; pageKey: string }> =
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
 
-  const handleNavigate = (page: Page) => {
+  const handleNavigate = (page: Page, anchor?: string) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (anchor) {
+      setTimeout(() => {
+        const el = document.getElementById(anchor);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 700);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const renderContent = () => {
@@ -207,7 +216,10 @@ function App() {
         return (
           <PageTransition pageKey="stories">
             <div className="bg-white min-h-screen">
-              <SuccessStories onBack={() => handleNavigate('home')} />
+              <SuccessStories 
+                onBack={() => handleNavigate('home')} 
+                onEnroll={() => handleNavigate('register')}
+              />
             </div>
           </PageTransition>
         );
@@ -310,12 +322,39 @@ function App() {
           </div>
           
           <div className="md:col-span-2">
-            <h4 className="font-black text-white mb-10 uppercase text-[11px] tracking-[0.4em] opacity-50">Links</h4>
+            <h4 className="font-black text-white mb-10 uppercase text-[11px] tracking-[0.4em] opacity-50">Company</h4>
             <ul className="space-y-6 text-[15px] font-bold">
-              {['Stories', 'Booking', 'Register', 'Admin'].map((l) => (
-                <li key={l}>
-                  <button onClick={() => handleNavigate(l.toLowerCase() as Page)} className="hover:text-indigo-400 transition-colors">
-                    {l}
+              {[
+                { label: 'Our Values', id: 'values' },
+                { label: 'Founder Profile', id: 'teachers' },
+                { label: 'Success Stories', page: 'stories' }
+              ].map((l) => (
+                <li key={l.label}>
+                  <button 
+                    onClick={() => l.page ? handleNavigate(l.page as Page) : handleNavigate('home', l.id)} 
+                    className="hover:text-indigo-400 transition-colors text-left"
+                  >
+                    {l.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div className="md:col-span-2">
+            <h4 className="font-black text-white mb-10 uppercase text-[11px] tracking-[0.4em] opacity-50">Support</h4>
+            <ul className="space-y-6 text-[15px] font-bold">
+              {[
+                { label: 'Book a Call', page: 'booking' },
+                { label: 'Enroll Now', page: 'register' },
+                { label: 'Admin Login', page: 'admin' }
+              ].map((l) => (
+                <li key={l.label}>
+                  <button 
+                    onClick={() => handleNavigate(l.page as Page)} 
+                    className="hover:text-indigo-400 transition-colors text-left"
+                  >
+                    {l.label}
                   </button>
                 </li>
               ))}

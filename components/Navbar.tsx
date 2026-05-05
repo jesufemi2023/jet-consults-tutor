@@ -5,7 +5,7 @@ import { BRANDING } from '../constants';
 import { Menu, X, Calendar, UserPlus, ArrowRight } from 'lucide-react';
 
 interface NavbarProps {
-  onNavigate: (page: 'home' | 'consult' | 'booking' | 'stories' | 'register') => void;
+  onNavigate: (page: 'home' | 'consult' | 'stories' | 'booking' | 'register' | 'admin', anchor?: string) => void;
   currentPage: string;
 }
 
@@ -23,31 +23,15 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const handleLinkClick = (pageOrId: 'home' | 'consult' | 'booking' | 'stories' | 'register' | string) => {
+  const handleLinkClick = (id: string) => {
     setIsMenuOpen(false);
-    
-    const pages = ['home', 'consult', 'booking', 'stories', 'register'];
-    
-    if (pages.includes(pageOrId)) {
-      onNavigate(pageOrId as any);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'home') {
+      onNavigate('home');
+    } else if (id === 'consult' || id === 'booking' || id === 'stories' || id === 'register') {
+      onNavigate(id as any);
     } else {
-      if (currentPage !== 'home') {
-        onNavigate('home');
-        setTimeout(() => {
-          const el = document.getElementById(pageOrId);
-          if (el) {
-            const y = el.getBoundingClientRect().top + window.scrollY - 100;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
-        const el = document.getElementById(pageOrId);
-        if (el) {
-          const y = el.getBoundingClientRect().top + window.scrollY - 100;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      }
+      // Anchor link
+      onNavigate('home', id);
     }
   };
 
@@ -165,7 +149,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   onClick={() => handleLinkClick(item.id)} 
-                  className="flex items-center justify-between py-4 px-6 rounded-2xl font-extrabold text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-all border border-transparent hover:border-slate-100"
+                  className="group flex items-center justify-between py-4 px-6 rounded-2xl font-extrabold text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-all border border-transparent hover:border-slate-100"
                 >
                   {item.label}
                   <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />

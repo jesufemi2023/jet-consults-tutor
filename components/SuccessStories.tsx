@@ -2,17 +2,10 @@
 import React from 'react';
 import { testimonials, getYouTubeId, isYouTubeShort } from '../data/testimonials';
 
-const SuccessStories: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+const SuccessStories: React.FC<{ onBack: () => void; onEnroll: () => void }> = ({ onBack, onEnroll }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       <div className="mb-16">
-        <button 
-          onClick={onBack}
-          className="group flex items-center text-indigo-600 font-bold text-xs uppercase tracking-[0.2em] mb-10 hover:text-indigo-800 transition-colors"
-        >
-          <svg className="w-5 h-5 mr-3 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
-          Back to Home
-        </button>
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight mb-8 leading-[1.1]">Real Results. <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">Real Character.</span></h1>
         <p className="text-xl sm:text-2xl text-slate-600 max-w-3xl font-medium leading-relaxed">
           See how our holistic approach to STEM tutoring transforms grades and develops responsible, hard-working students.
@@ -88,10 +81,10 @@ const SuccessStories: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-8 tracking-tight max-w-3xl leading-[1.1]">Ready to write your child's success story?</h2>
           <p className="text-xl text-indigo-100 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">Join our community of high-achieving, disciplined, and purposeful students today.</p>
           <button 
-            onClick={() => window.scrollTo(0, 0)}
+            onClick={onEnroll}
             className="px-12 py-6 bg-white text-indigo-600 rounded-2xl font-extrabold text-lg shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] hover:-translate-y-1 transition-all duration-300 uppercase tracking-widest"
           >
-            Apply for Admission
+            Enroll Now
           </button>
         </div>
       </div>

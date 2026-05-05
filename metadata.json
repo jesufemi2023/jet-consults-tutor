@@ -1,0 +1,8 @@
+{
+  "name": "Jet Consults Academy",
+  "description": "Jet Consults Academy: Premium online tutoring for Grades 3-12, focusing on STEM excellence, character building, and academic reinforcement.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

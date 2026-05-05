@@ -240,28 +240,7 @@ const Hero: React.FC<{ onStart: () => void; onStories: () => void }> = ({ onStar
             </div>
           </motion.div>
 
-          <motion.div 
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute -bottom-16 -left-16 bg-white/90 backdrop-blur-xl p-8 rounded-[3rem] shadow-2xl shadow-blue-100/50 border border-white z-20 hidden xl:flex flex-col gap-3"
-          >
-            <div className="flex -space-x-4">
-              {[
-                "https://images.unsplash.com/photo-1594132174010-09373d325719?auto=format&fit=crop&w=150&q=80",
-                "https://images.unsplash.com/photo-1544717297-fa95b3697628?auto=format&fit=crop&w=150&q=80",
-                "https://images.unsplash.com/photo-1591123109990-da74960c13b3?auto=format&fit=crop&w=150&q=80",
-                "https://images.unsplash.com/photo-1591123720164-de1348028a82?auto=format&fit=crop&w=150&q=80"
-              ].map((url, i) => (
-                <div key={i} className={`w-12 h-12 rounded-full border-4 border-white overflow-hidden bg-slate-200`}>
-                  <img src={url} alt="student" className="w-full h-full object-cover" />
-                </div>
-              ))}
-              <div className="px-4 h-12 rounded-full border-4 border-white bg-indigo-600 flex items-center justify-center text-white text-[10px] font-black">
-                hundreds more
-              </div>
-            </div>
-            <p className="text-sm font-bold text-slate-600">Students transformed</p>
-          </motion.div>
+
         </motion.div>
       </div>
 

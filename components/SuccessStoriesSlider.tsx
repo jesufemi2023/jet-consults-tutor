@@ -6,6 +6,10 @@ const SuccessStoriesSlider: React.FC<{ onViewAll: () => void }> = ({ onViewAll }
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
+  const touchStart = React.useRef<number | null>(null);
+  const touchEnd = React.useRef<number | null>(null);
+
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,6 +47,27 @@ const SuccessStoriesSlider: React.FC<{ onViewAll: () => void }> = ({ onViewAll }
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
   }, [next, currentIndex, visibleCount]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEnd.current = null;
+    touchStart.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEnd.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart.current || !touchEnd.current) return;
+    const distance = touchStart.current - touchEnd.current;
+    if (Math.abs(distance) < minSwipeDistance) return;
+
+    if (distance > 0) {
+      next();
+    } else {
+      prev();
+    }
+  };
 
   return (
     <section className="py-16 sm:py-24 bg-white overflow-hidden px-4 sm:px-6 relative">
@@ -88,7 +113,12 @@ const SuccessStoriesSlider: React.FC<{ onViewAll: () => void }> = ({ onViewAll }
           </div>
         </div>
 
-        <div className="relative overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div 
+          className="relative overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0 touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           <div 
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * (100 / visibleCount)}%)` }}
